@@ -20,42 +20,33 @@
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-require_once dirname(__FILE__). '/../seo/pseo.php';
+require_once dirname(__FILE__) . '/../seo/pseo.php';
 
 class PSeoImpl extends PSEO {
 
     protected $metaList = array();
-    protected $jsList = array();
-    protected $html = array(
-        'head' => array(),
-        'toe' => array(),
-    );
 
     public function addMeta($key, $value) {
         $this->metaList[$key] = $value;
     }
 
-    public function addjs($js, $onHead=false) {
-        $this->jsList[] = $js;
-    }
-
-
-    public function getMeta($key){
+    public function getMeta($key) {
         return $this->metaList[$key];
     }
 
-    public function isAddedJs($js){
-        return in_array($js, $this->jsList);
+    public function isAddedJs($js) {
+        return $this->jsFactory->checkJsExist($js);
     }
 
-    public function echoJs() {
-        
+    public function addJs($js, $type){
+        $this->getJsFactory();
+        $this->jsFactory->addJs($js, $type);
     }
 
     public function echoMeta() {
         $output = '';
-        foreach($this->metaList as $key => $content){
-            $output .= '<meta name="'.$key.'" content="'.$content.'"/>';
+        foreach ($this->metaList as $key => $content) {
+            $output .= '<meta name="' . $key . '" content="' . $content . '"/>';
         }
         return $output;
     }

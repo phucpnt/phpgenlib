@@ -38,22 +38,15 @@ class PSeoImplTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('test title', $this->object->getMeta('title'));
     }
 
-    /**
-     */
     public function testAddjs() {
-        $this->object->addjs('jsfile.js');
-        $this->assertTrue($this->object->isAddedJs('jsfile.js'));
+        $this->object->addJs('jsfile.js', PJsFactory::TMPL_URL);
+//        $this->assertTrue($this->object->isAddedJs('jsfile.js'));
     }
 
-    /**
-     * @covers {className}::{origMethodName}
-     * @todo Implement testEchoJs().
-     */
     public function testEchoJs() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->addJs('jsfile.js', PJsFactory::TMPL_URL);
+        var_dump($this->object->echoJs());
+        $this->assertTrue(FALSE !== strpos($this->object->echoJs(), 'jsfile.js'));
     }
 
     /**

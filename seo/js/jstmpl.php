@@ -1,10 +1,6 @@
 <?php
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-/*
   Copyright 2012  Phuc PN.Truong  (email : pn.truongphuc@exto.com)
 
   This program is free software; you can redistribute it and/or modify
@@ -21,8 +17,38 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-class PJsPath implements PJsGeneral {
-    public function render() {
+interface PJsTmpl {
+
+    public function output();
+
+    public function addScript($script);
+}
+
+class PJsTmplUrl implements PJsTmpl {
+    public $jsList = array();
+
+    public function output() {
+        $jsList = $this->jsList;
+        ob_start();
+        include 'tmpl/defer-jsurl-tmpl.php'; 
+        $output = ob_get_clean();
+        return $output;
+    }
+
+    public function addScript($url) {
+        $this->jsList[] = $url;
+    }
+
+}
+
+class PJsTmplText implements PJsTmpl {
+
+    public function addScript($script) {
         
     }
+
+    public function output() {
+        
+    }
+
 }
