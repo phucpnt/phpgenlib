@@ -1,5 +1,4 @@
 <?php
-
 /*
   Copyright 2012  Phuc PN.Truong  (email : pn.truongphuc@exto.com)
 
@@ -16,30 +15,21 @@
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-/**
-PHP lib for SEO purpose:
-    Meta tag generated.
-    Javascript defer loading.
-    Etc.
-Require:
-    Independent platform
-    Quickly adapter to native support on usage framework or cms.
- */
-require_once 'js/jsfactory.php'; 
-abstract class PSEO{
-    protected $jsList = array();
-    /**
-     * @var PJsFactory
-     */
-    protected $jsFactory = NULL;
-    public function getJsFactory(){
-        if($this->jsFactory === NULL){
-            $this->jsFactory = new PJsFactory;
-        }
-        return $this->jsFactory;
+?>
+
+<script type="text/javascript">
+
+    function deferJSRun(){
+<?php
+foreach ($jsList as $text):
+    echo $text;
+endforeach;
+?>
     }
-    abstract public function renderJs();
-    abstract public function addJs($js, $type);
-    abstract public function addMeta($key, $value);
-    abstract public function echoMeta();
-}
+    // Check for browser support of event handling capability
+    if (window.addEventListener)
+        window.addEventListener("load",deferJSRun, false);
+    else if (window.attachEvent)
+        window.attachEvent("onload",deferJSRun);
+    else window.onload = deferJSRun;
+</script>

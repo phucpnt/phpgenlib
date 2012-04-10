@@ -25,12 +25,13 @@ interface PJsTmpl {
 }
 
 class PJsTmplUrl implements PJsTmpl {
+
     public $jsList = array();
 
     public function output() {
         $jsList = $this->jsList;
         ob_start();
-        include 'tmpl/defer-jsurl-tmpl.php'; 
+        include 'tmpl/defer-jsurl-tmpl.php';
         $output = ob_get_clean();
         return $output;
     }
@@ -43,12 +44,18 @@ class PJsTmplUrl implements PJsTmpl {
 
 class PJsTmplText implements PJsTmpl {
 
+    public $jsList = array();
+
     public function addScript($script) {
-        
+        $this->jsList[] = $script;
     }
 
     public function output() {
-        
+        $jsList = $this->jsList;
+        ob_start();
+        include 'tmpl/defer-jstext-tmpl.php';
+        $output = ob_get_clean();
+        return $output;
     }
 
 }

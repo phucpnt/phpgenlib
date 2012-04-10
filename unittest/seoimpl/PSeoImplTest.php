@@ -40,13 +40,18 @@ class PSeoImplTest extends PHPUnit_Framework_TestCase {
 
     public function testAddjs() {
         $this->object->addJs('jsfile.js', PJsFactory::TMPL_URL);
-//        $this->assertTrue($this->object->isAddedJs('jsfile.js'));
+        $this->assertTrue($this->object->isExists('jsfile.js'));
     }
 
-    public function testEchoJs() {
+    public function testRenderJs() {
         $this->object->addJs('jsfile.js', PJsFactory::TMPL_URL);
-        var_dump($this->object->echoJs());
-        $this->assertTrue(FALSE !== strpos($this->object->echoJs(), 'jsfile.js'));
+        $this->assertTrue(FALSE !== strpos($this->object->renderJs(), 'jsfile.js'));
+    }
+
+    public function testRenderJsScript(){
+        $this->object->addJs('test=2345;', PJsFactory::TMPL_SCRIPT);
+        var_dump($this->object->renderJs());
+        $this->assertTrue(FALSE !== strpos($this->object->renderJs(), 'test=2345;'));
     }
 
     /**

@@ -35,13 +35,24 @@ class PJsFactory {
             $this->supportJsList[$type] = new PJsIterator();
             switch ($type) {
                 case self::TMPL_SCRIPT:
+                    $this->supportJsList[$type]->setTmpl(new PJsTmplText());
                     break;
                 case self::TMPL_URL:
                     $this->supportJsList[$type]->setTmpl(new PJsTmplUrl());
                     break;
             }
         }
-        $this->supportJsList[$type]->addJs($js);
+        $this->supportJsList[$type]->add($js);
+    }
+
+    public function isExists($js) {
+        $result = false;
+        foreach ($this->supportJsList as $jsList) {
+            if ($jsList instanceof PJsIterator) {
+                $result = $result || $jsList->isExists($js);
+            }
+        }
+        return $result;
     }
 
     public function output() {
@@ -55,11 +66,11 @@ class PJsFactory {
         return $output;
     }
 
-    public function startCapture(){
+    public function startCapture() {
         ob_start();
     }
 
-    public function endCapture(){
+    public function endCapture() {
         $script = ob_get_clean();
         $this->addJs($script, self::TMPL_SCRIPT);
     }

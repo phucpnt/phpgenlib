@@ -20,7 +20,7 @@
 class PJsIterator implements Iterator {
 
     protected $jsListTmpl = NULL;
-    protected $jsList = array();
+    protected $jsList     = array();
     private $valid = FALSE;
 
     public function current() {
@@ -32,27 +32,32 @@ class PJsIterator implements Iterator {
     }
 
     public function next() {
-        $this->valid = (next($this->jsList) === FALSE)? FALSE: TRUE;
+        $this->valid = (next($this->jsList) === FALSE) ? FALSE : TRUE;
     }
 
     public function rewind() {
-        $this->valid = (rewind($this->jsList) === FALSE)? FALSE: TRUE;
+        $this->valid = (rewind($this->jsList) === FALSE) ? FALSE : TRUE;
     }
 
     public function valid() {
         return $this->valid;
     }
 
-    public function addJs($js){
+    public function add($js) {
         $this->jsList[] = $js;
     }
 
-    public function setTmpl(&$tmpl){
-        $this->jsListTmpl =& $tmpl;
-        $this->jsListTmpl->jsList =& $this->jsList;
+    public function isExists($js) {
+        return in_array($js, $this->jsList);
     }
 
-    public function render(){
+    public function setTmpl(&$tmpl) {
+        $this->jsListTmpl = & $tmpl;
+        $this->jsListTmpl->jsList = & $this->jsList;
+    }
+
+    public function render() {
         return $this->jsListTmpl->output();
     }
+
 }

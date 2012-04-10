@@ -40,7 +40,11 @@ class PSeoImpl extends PSEO {
 
     public function addJs($js, $type){
         $this->getJsFactory();
-        $this->jsFactory->addJs($js, $type);
+        return $this->jsFactory->addJs($js, $type);
+    }
+
+    public function isExists($js){
+        return $this->jsFactory->isExists($js);
     }
 
     public function echoMeta() {
@@ -49,6 +53,10 @@ class PSeoImpl extends PSEO {
             $output .= '<meta name="' . $key . '" content="' . $content . '"/>';
         }
         return $output;
+    }
+
+    public function renderJs() {
+        return $this->jsFactory->output();
     }
 
 }
